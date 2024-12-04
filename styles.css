@@ -2,7 +2,7 @@ body {
   margin: 0;
   font-family: Arial, sans-serif;
   background-color: #121212;
-  color: #ffffff; 
+  color: #ffffff;
 }
 
 .details-container {
@@ -15,20 +15,23 @@ body {
   max-width: 600px;
   margin-left: auto;
   margin-right: auto;
-  color: #ffffff; 
+  color: #ffffff ;
+}
+
+.details-container, 
+.details-container * {
+  color: #ffffff ;
 }
 
 .details-container h2 {
   font-size: 1.5rem;
   font-weight: bold;
   margin-top: 1rem;
-  color: #ffffff; 
 }
 
 .details-container p {
   font-size: 1rem;
   line-height: 1.6;
-  color: #ffffff; 
 }
 
 .btn {
