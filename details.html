@@ -2,68 +2,78 @@
 <html lang="en">
 <head>
   <title>Halo Enemy Details</title>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
   <style>
     body {
-      background-color: #1c2331;
-      color: white;
       margin: 0;
-      padding: 0;
+      font-family: Arial, sans-serif;
+      background-color: #121212;
+      color: white;
+      min-height: 100vh;
     }
-    h1 {
-      margin-top: 20px;
-      text-align: center;
-      color: #eaeaea;
+    .details-container {
+      background-color: #1c1e26;
+      border: 1px solid #333;
+      border-radius: 10px;
+      padding: 20px;
+      margin: 30px auto;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      max-width: 600px;
     }
-    .card {
-      background-color: #333;
-      border: none;
-      margin: 20px auto;
-      border-radius: 8px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    .details-container img {
+      width: 100%;
+      border-radius: 10px;
     }
-    .card img {
-      border-top-left-radius: 8px;
-      border-top-right-radius: 8px;
+    .details-container h2 {
+      margin-top: 15px;
+      color: white;
+    }
+    .details-container p {
+      margin: 10px 0;
+      color: white;
     }
     .btn {
-      background-color: #0056b3;
-      color: #fff;
-      margin: 20px 0;
+      background-color: #4fc3f7;
+      color: black;
+      text-decoration: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      display: inline-block;
     }
     .btn:hover {
-      background-color: #003f80;
+      background-color: #3ba9d1;
+      color: white;
     }
     footer {
-      margin-top: 20px;
-      background-color: #0b0f24;
+      background-color: #1c1e26;
+      color: #eaeaea;
       text-align: center;
-      padding: 10px;
-      color: #ccc;
+      padding: 10px 0;
     }
   </style>
 </head>
 <body>
-  <header>
+  <header class="text-center py-4">
     <h1>Halo Enemy Details</h1>
   </header>
   <main>
-    <div id="enemy-details" class="container"></div>
-    <div class="text-center">
-      <a href="enemies.html" class="btn btn-primary">Back to Main Page</a>
+    <div id="enemy-details" class="details-container">
+      <!-- Enemy details go here -->
+    </div>
+    <div class="text-center mt-4">
+      <a href="enemies.html" class="btn">Back to Main Page</a>
     </div>
   </main>
   <footer>
     <p>&copy; 2024 Halo API Project</p>
   </footer>
-
   <script>
     const apiUrl = "https://www.haloapi.com/metadata/h5/metadata/enemies";
     const apiKey = "8d903eb0ea2445e5beb0ede1d5c552f2";
-
-    const enemyDescriptions = {
+    const descriptions = {
       "2625192795": "Grunts are the backbone of the Covenant's military force. They rely on numbers and can be dangerous when in large groups.",
       "2631958027": "Crawlers are fast-moving Promethean units. Agile and relentless, they swarm their targets to overwhelm them.",
       "123080854": "Knights are heavily armed Promethean commanders, known for their resilience and powerful attacks.",
@@ -75,10 +85,9 @@
       "2957796559": "Elites are the leaders of Covenant ground forces. Intelligent and deadly, they are formidable opponents.",
       "2497647768": "Promethean Soldiers are hybrid units blending human and machine traits. They are versatile infantry units.",
       "1102617398": "Grunt Mechs are experimental units that combine Grunt infantry with mechanized combat power.",
-      "3207900961": "Wasps are Covenant aerial units that provide reconnaissance and air support in battle.",
+      "3207900961": "Wasps are Covenant aerial units that provide reconnaissance and air support in battle."
     };
-
-    const enemyWeaknesses = {
+    const weaknesses = {
       "2625192795": "Aim for the head or use explosives to take out groups.",
       "2631958027": "Use rapid-fire weapons to counter their speed.",
       "123080854": "Target their glowing core to deal critical damage.",
@@ -90,21 +99,20 @@
       "2957796559": "Plasma weapons are effective against their shields.",
       "2497647768": "Aim for their head or use precision weapons for faster kills.",
       "1102617398": "Attack from behind to bypass their armor.",
-      "3207900961": "Use precision weapons to counter their maneuverability.",
+      "3207900961": "Use precision weapons to counter their maneuverability."
     };
-
     const enemyDetailsDiv = document.getElementById("enemy-details");
     const urlParams = new URLSearchParams(window.location.search);
     const enemyId = urlParams.get("id");
-
-    if (!enemyId) {
+    if (!enemyDetailsDiv) {
+      console.error("Error: 'enemy-details' element not found.");
+    } else if (!enemyId) {
       enemyDetailsDiv.innerHTML = `
-        <div class="alert alert-danger text-center">No enemy ID provided in the URL.</div>
+        <div>No enemy ID provided in the URL.</div>
       `;
     } else {
       fetchEnemyDetails(enemyId);
     }
-
     async function fetchEnemyDetails(id) {
       try {
         const response = await fetch(apiUrl, {
@@ -112,44 +120,35 @@
           headers: {
             "Accept-Language": "en",
             "Cache-Control": "no-cache",
-            "Ocp-Apim-Subscription-Key": apiKey,
-          },
+            "Ocp-Apim-Subscription-Key": apiKey
+          }
         });
-
         if (!response.ok) {
-          throw new Error("Failed to fetch enemy details.");
+          throw new Error(`HTTP error! status: ${response.status}`);
         }
-
         const enemies = await response.json();
-        const enemy = enemies.find(e => e.id === id);
-
+        const enemy = enemies.find((e) => e.id === id);
         if (!enemy) {
-          throw new Error("Enemy not found.");
+          throw new Error(`Enemy with ID '${id}' not found.`);
         }
-
-        enemy.description = enemyDescriptions[id] || "No description available.";
-        enemy.weakness = enemyWeaknesses[id] || "No specific weaknesses available.";
+        enemy.description = descriptions[id] || "No description available.";
+        enemy.weakness = weaknesses[id] || "No specific weaknesses available.";
         displayEnemyDetails(enemy);
       } catch (error) {
         console.error("Error fetching enemy details:", error);
         enemyDetailsDiv.innerHTML = `
-          <div class="alert alert-danger text-center">
-            Failed to load enemy details. Please try again later.
-          </div>
+          <div>Error loading enemy details.</div>
         `;
       }
     }
-
     function displayEnemyDetails(enemy) {
       enemyDetailsDiv.innerHTML = `
-        <div class="card" style="max-width: 600px; margin: auto;">
-          <img src="${enemy.largeIconImageUrl}" alt="${enemy.name}" class="card-img-top">
-          <div class="card-body">
-            <h2 class="card-title">${enemy.name}</h2>
-            <p><strong>Faction:</strong> ${enemy.faction || "Unknown"}</p>
-            <p>${enemy.description}</p>
-            <p><strong>Weakness:</strong> ${enemy.weakness}</p>
-          </div>
+        <div class="details-container">
+          <img src="${enemy.largeIconImageUrl}" alt="${enemy.name}">
+          <h2>${enemy.name}</h2>
+          <p><strong>Faction:</strong> ${enemy.faction || "Unknown"}</p>
+          <p>${enemy.description}</p>
+          <p><strong>Weakness:</strong> ${enemy.weakness}</p>
         </div>
       `;
     }
