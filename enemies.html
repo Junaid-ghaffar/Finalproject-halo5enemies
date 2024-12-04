@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Halo Enemies</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #1c2331;
+      color: white;
+    }
+    h1 {
+      margin-top: 20px;
+      color: #fff;
+    }
+    .card {
+      background-color: #333;
+      color: white;
+      margin: 10px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    }
+    .card:hover {
+      transform: scale(1.02);
+    }
+    .btn-primary {
+      background-color: #0056b3;
+      border: none;
+    }
+    .btn-primary:hover {
+      background-color: #004080;
+    }
+    footer {
+      margin-top: 20px;
+      padding: 10px;
+      background-color: #0b0f24;
+      color: #bbb;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1 class="text-center">Halo Enemies</h1>
+  </header>
+  <main>
+    <div class="container">
+      <div class="row mb-4">
+        <div class="col-md-8 offset-md-2">
+          <input type="text" id="search-input" class="form-control" placeholder="Search for enemies...">
+        </div>
+      </div>
+      <div id="enemies-container" class="d-flex flex-wrap justify-content-center"></div>
+    </div>
+  </main>
+  <footer>
+    <p>&copy; 2024 Halo Enemies Project</p>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const apiUrl = 'https://www.haloapi.com/metadata/h5/metadata/enemies';
+      const apiKey = '8d903eb0ea2445e5beb0ede1d5c552f2';
+      const enemiesContainer = document.getElementById('enemies-container');
+      const searchInput = document.getElementById('search-input');
+      let allEnemies = [];
+
+      async function fetchEnemies() {
+        try {
+          const response = await fetch(apiUrl, {
+            headers: {
+              'Accept-Language': 'en',
+              'Cache-Control': 'no-cache',
+              'Ocp-Apim-Subscription-Key': apiKey,
+            },
+          });
+
+          if (!response.ok) {
+            throw new Error('Failed to fetch enemies');
+          }
+
+          allEnemies = await response.json();
+          showEnemies(allEnemies);
+        } catch (err) {
+          console.error('Error fetching enemies:', err);
+          enemiesContainer.innerHTML = '<div class="alert alert-danger">Failed to load enemies. Try again later.</div>';
+        }
+      }
+
+      function showEnemies(enemies) {
+        if (!enemies || enemies.length === 0) {
+          enemiesContainer.innerHTML = '<div class="alert alert-warning">No enemies found.</div>';
+          return;
+        }
+
+        enemiesContainer.innerHTML = enemies.map(enemy => `
+          <div class="card" style="width: 18rem;">
+            <img src="${enemy.largeIconImageUrl}" alt="${enemy.name}" class="card-img-top">
+            <div class="card-body">
+              <h5 class="card-title">${enemy.name}</h5>
+              <p class="card-text"><strong>Faction:</strong> ${enemy.faction || 'Unknown'}</p>
+              <a href="details.html?id=${enemy.id}" class="btn btn-primary">View Details</a>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      searchInput.addEventListener('input', function () {
+        const query = searchInput.value.toLowerCase();
+        const filtered = allEnemies.filter(e => e.name.toLowerCase().includes(query));
+        showEnemies(filtered);
+      });
+
+      fetchEnemies();
+    });
+  </script>
+</body>
+</html>
