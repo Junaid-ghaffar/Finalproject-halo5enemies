@@ -10,12 +10,12 @@
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background-color: #121212;
+      background-color: #1c2331;
       color: white;
       min-height: 100vh;
     }
     .details-container {
-      background-color: #1c1e26;
+      background-color: #121212;
       border: 1px solid #333;
       border-radius: 10px;
       padding: 20px;
@@ -48,7 +48,7 @@
       color: white;
     }
     footer {
-      background-color: #1c1e26;
+      background-color: #121212;
       color: #eaeaea;
       text-align: center;
       padding: 10px 0;
@@ -60,9 +60,7 @@
     <h1>Halo Enemy Details</h1>
   </header>
   <main>
-    <div id="enemy-details" class="details-container">
-      <!-- Enemy details go here -->
-    </div>
+    <div id="enemy-details" class="details-container"></div>
     <div class="text-center mt-4">
       <a href="enemies.html" class="btn">Back to Main Page</a>
     </div>
@@ -107,9 +105,7 @@
     if (!enemyDetailsDiv) {
       console.error("Error: 'enemy-details' element not found.");
     } else if (!enemyId) {
-      enemyDetailsDiv.innerHTML = `
-        <div>No enemy ID provided in the URL.</div>
-      `;
+      enemyDetailsDiv.innerHTML = `<div>No enemy ID provided in the URL.</div>`;
     } else {
       fetchEnemyDetails(enemyId);
     }
@@ -136,9 +132,7 @@
         displayEnemyDetails(enemy);
       } catch (error) {
         console.error("Error fetching enemy details:", error);
-        enemyDetailsDiv.innerHTML = `
-          <div>Error loading enemy details.</div>
-        `;
+        enemyDetailsDiv.innerHTML = `<div>Error loading enemy details.</div>`;
       }
     }
     function displayEnemyDetails(enemy) {
