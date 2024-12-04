@@ -2,7 +2,7 @@ body {
   margin: 0;
   font-family: Arial, sans-serif;
   background-color: #121212;
-  color: #eaeaea;
+  color: #ffffff; 
 }
 
 .details-container {
@@ -15,24 +15,20 @@ body {
   max-width: 600px;
   margin-left: auto;
   margin-right: auto;
-  color: #ffffff;
+  color: #ffffff; 
 }
 
 .details-container h2 {
   font-size: 1.5rem;
   font-weight: bold;
   margin-top: 1rem;
-  color: #ffffff;
+  color: #ffffff; 
 }
 
 .details-container p {
   font-size: 1rem;
   line-height: 1.6;
-  color: #ffffff;
-}
-
-.footer-text {
-  color: #eaeaea;
+  color: #ffffff; 
 }
 
 .btn {
@@ -50,4 +46,14 @@ body {
 .btn:hover {
   background-color: #3ba9d1;
   color: #fff;
+}
+
+.text-center {
+  text-align: center;
+}
+
+footer {
+  background-color: #1c1e26;
+  color: #eaeaea;
+  padding: 1rem 0;
 }
