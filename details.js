@@ -1,5 +1,5 @@
 const apiUrl = "https://www.haloapi.com/metadata/h5/metadata/enemies";
-const apiKey = "8d903eb0ea2445e5beb0ede1d5c552f2";
+const apiKey = "782bb56da4c0443c92b35928ebc92c51";
 
 const enemyDescriptions = {
   "2625192795": "Grunts are the backbone of the Covenant's military force. They rely on numbers and can be dangerous when in large groups.",
